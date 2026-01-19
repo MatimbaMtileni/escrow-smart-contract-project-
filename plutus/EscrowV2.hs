@@ -1,4 +1,3 @@
-EscrowV2.hs — FINAL (Plutus V2, Approval-Safe)
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE DeriveGeneric #-}
