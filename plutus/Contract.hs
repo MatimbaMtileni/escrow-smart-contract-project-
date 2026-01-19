@@ -1,4 +1,3 @@
-✅ Contract.hs — FINAL (Approval Updates Datum)
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeApplications #-}
