@@ -106,11 +106,3 @@ mkValidator dat red ctx =
 validator :: Validator
 validator = mkValidatorScript
     $$(PlutusTx.compile [|| mkValidator ||])
-
-
-✔ Approval signer enforced
-✔ Duplicate approvals blocked
-✔ Deadline enforced
-✔ n-of-m release enforced
-✔ Refund protected
-✔ Fully Plutus V2 compliant
