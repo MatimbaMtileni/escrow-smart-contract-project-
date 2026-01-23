@@ -1,25 +1,25 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { int, sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
 /**
  * Core user table backing auth flow.
  * Extend this file with additional tables as your product grows.
  * Columns use camelCase to match both database fields and generated types.
  */
-export const users = mysqlTable("users", {
+export const users = sqliteTable("users", {
   /**
    * Surrogate primary key. Auto-incremented numeric value managed by the database.
    * Use this for relations between tables.
    */
   id: int("id").autoincrement().primaryKey(),
   /** Manus OAuth identifier (openId) returned from the OAuth callback. Unique per user. */
-  openId: varchar("openId", { length: 64 }).notNull().unique(),
+  openId: text("openId").notNull().unique(),
   name: text("name"),
-  email: varchar("email", { length: 320 }),
-  loginMethod: varchar("loginMethod", { length: 64 }),
-  role: mysqlEnum("role", ["user", "admin"]).default("user").notNull(),
-  createdAt: timestamp("createdAt").defaultNow().notNull(),
-  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
-  lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
+  email: text("email"),
+  loginMethod: text("loginMethod"),
+  role: text("role").default("user").notNull(),
+  createdAt: integer("createdAt", { mode: "timestamp" }).defaultNow().notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp" }).defaultNow().onUpdateNow().notNull(),
+  lastSignedIn: integer("lastSignedIn", { mode: "timestamp" }).defaultNow().notNull(),
 });
 
 export type User = typeof users.$inferSelect;
@@ -29,28 +29,28 @@ export type InsertUser = typeof users.$inferInsert;
  * Escrow Contracts Table
  * Stores all escrow agreements with their state and parameters
  */
-export const escrowContracts = mysqlTable("escrow_contracts", {
+export const escrowContracts = sqliteTable("escrow_contracts", {
   id: int("id").autoincrement().primaryKey(),
   /** Unique identifier for the escrow contract */
-  contractId: varchar("contract_id", { length: 64 }).notNull().unique(),
+  contractId: text("contract_id").notNull().unique(),
   /** User ID of the depositor (fund locker) */
   depositorId: int("depositor_id").notNull(),
   /** User ID of the beneficiary (fund receiver) */
   beneficiaryId: int("beneficiary_id").notNull(),
   /** Amount locked in the escrow (in smallest unit, e.g., lovelace for Cardano) */
-  amount: varchar("amount", { length: 64 }).notNull(),
+  amount: text("amount").notNull(),
   /** Number of approvals required before release */
   requiredApprovals: int("required_approvals").notNull(),
   /** Current number of approvals collected */
   currentApprovals: int("current_approvals").default(0).notNull(),
   /** Deadline timestamp (Unix milliseconds) */
-  deadline: varchar("deadline", { length: 64 }).notNull(),
+  deadline: text("deadline").notNull(),
   /** Status of the escrow: pending, approved, released, refunded */
-  status: mysqlEnum("status", ["pending", "approved", "released", "refunded"]).default("pending").notNull(),
+  status: text("status").default("pending").notNull(),
   /** Description or purpose of the escrow */
   description: text("description"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().onUpdateNow().notNull(),
+  createdAt: integer("created_at", { mode: "timestamp" }).defaultNow().notNull(),
+  updatedAt: integer("updated_at", { mode: "timestamp" }).defaultNow().onUpdateNow().notNull(),
 });
 
 export type EscrowContract = typeof escrowContracts.$inferSelect;
@@ -60,17 +60,17 @@ export type InsertEscrowContract = typeof escrowContracts.$inferInsert;
  * Escrow Officials Table
  * Maps officials to escrow contracts and tracks their approvals
  */
-export const escrowOfficials = mysqlTable("escrow_officials", {
+export const escrowOfficials = sqliteTable("escrow_officials", {
   id: int("id").autoincrement().primaryKey(),
   /** Reference to the escrow contract */
-  contractId: varchar("contract_id", { length: 64 }).notNull(),
+  contractId: text("contract_id").notNull(),
   /** User ID of the official */
   officialId: int("official_id").notNull(),
   /** Whether this official has approved */
   hasApproved: int("has_approved").default(0).notNull(),
   /** Timestamp of approval (null if not approved) */
-  approvalTimestamp: timestamp("approval_timestamp"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  approvalTimestamp: integer("approval_timestamp", { mode: "timestamp" }),
+  createdAt: integer("created_at", { mode: "timestamp" }).defaultNow().notNull(),
 });
 
 export type EscrowOfficial = typeof escrowOfficials.$inferSelect;
@@ -80,19 +80,19 @@ export type InsertEscrowOfficial = typeof escrowOfficials.$inferInsert;
  * Transaction History Table
  * Logs all operations on escrow contracts for audit trail
  */
-export const transactionHistory = mysqlTable("transaction_history", {
+export const transactionHistory = sqliteTable("transaction_history", {
   id: int("id").autoincrement().primaryKey(),
   /** Reference to the escrow contract */
-  contractId: varchar("contract_id", { length: 64 }).notNull(),
+  contractId: text("contract_id").notNull(),
   /** Type of transaction: lock, approve, release, refund */
-  transactionType: mysqlEnum("transaction_type", ["lock", "approve", "release", "refund"]).notNull(),
+  transactionType: text("transaction_type").notNull(),
   /** User ID who initiated the transaction */
   initiatedBy: int("initiated_by").notNull(),
   /** Additional details about the transaction */
   details: text("details"),
   /** Transaction hash or reference (if applicable) */
-  txHash: varchar("tx_hash", { length: 256 }),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+  txHash: text("tx_hash"),
+  createdAt: integer("created_at", { mode: "timestamp" }).defaultNow().notNull(),
 });
 
 export type TransactionHistory = typeof transactionHistory.$inferSelect;
