@@ -8,13 +8,13 @@ This escrow smart contract platform integrates with **Cardano's Lace wallet** to
 
 ### Frontend Components
 
-**`useCardanoWallet` Hook** (`client/src/hooks/useCardanoWallet.ts`)
+**`useCardanoWallet` Hook** (`client/src/hooks/useCardanoWallet.js`)
 - Manages Lace wallet connection state
 - Handles wallet detection and initialization
 - Provides methods for signing and submitting transactions
 - Auto-connects if wallet is already enabled
 
-**`WalletConnect` Component** (`client/src/components/WalletConnect.tsx`)
+**`WalletConnect` Component** (`client/src/components/WalletConnect.jsx`)
 - Displays wallet connection status
 - Shows address, network, and balance
 - Provides connect/disconnect buttons
@@ -22,13 +22,13 @@ This escrow smart contract platform integrates with **Cardano's Lace wallet** to
 
 ### Backend Services
 
-**Cardano Configuration** (`server/cardano/contract.ts`)
+**Cardano Configuration** (`server/cardano/contract.js`)
 - Defines Plutus V2 smart contract structure
 - Specifies EscrowDatum and EscrowAction types
 - Contains testnet configuration (Blockfrost, Preprod network)
 - Placeholder for compiled Plutus script CBOR
 
-**Wallet Integration** (`server/cardano/wallet.ts`)
+**Wallet Integration** (`server/cardano/wallet.js`)
 - Initializes Lucid with Blockfrost provider
 - Provides utilities for querying UTxOs
 - Manages network parameters
@@ -60,7 +60,7 @@ This escrow smart contract platform integrates with **Cardano's Lace wallet** to
 3. **Deploy Smart Contract** (Future)
    - Compile Haskell Plutus code to CBOR
    - Deploy to Preprod testnet
-   - Update `SCRIPT_HASH` and `CONTRACT_ADDRESS` in `server/cardano/contract.ts`
+   - Update `SCRIPT_HASH` and `CONTRACT_ADDRESS` in `server/cardano/contract.js`
 
 ## Smart Contract Logic
 
@@ -241,8 +241,8 @@ Tests cover:
 
 - [ ] Compile Plutus smart contract to CBOR
 - [ ] Deploy contract to Preprod testnet
-- [ ] Update `SCRIPT_HASH` in `server/cardano/contract.ts`
-- [ ] Update `CONTRACT_ADDRESS` in `server/cardano/contract.ts`
+- [ ] Update `SCRIPT_HASH` in `server/cardano/contract.js`
+- [ ] Update `CONTRACT_ADDRESS` in `server/cardano/contract.js`
 - [ ] Set `BLOCKFROST_API_KEY` environment variable
 - [ ] Test all workflows with real Lace wallet
 - [ ] Verify transaction history on Cardano explorer

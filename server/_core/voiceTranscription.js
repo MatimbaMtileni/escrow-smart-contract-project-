@@ -244,8 +244,8 @@ function getLanguageName(langCode: string): string {
 /**
  * Example tRPC procedure implementation:
  * 
- * ```ts
- * // In server/routers.ts
+ * ```js
+ * // In server/routers.js
  * import { transcribeAudio } from "./_core/voiceTranscription";
  * 
  * export const voiceRouter = router({

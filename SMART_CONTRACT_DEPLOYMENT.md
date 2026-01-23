@@ -96,7 +96,7 @@ cat script.addr
 
 ## Step 5: Update Configuration
 
-Update `server/cardano/contract.ts` with your deployed contract details:
+Update `server/cardano/contract.js` with your deployed contract details:
 
 ```typescript
 export const CARDANO_CONFIG = {
