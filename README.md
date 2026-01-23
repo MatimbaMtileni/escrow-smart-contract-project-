@@ -42,7 +42,7 @@ See [SMART_CONTRACT_DEPLOYMENT.md](SMART_CONTRACT_DEPLOYMENT.md) for detailed de
 
 ## Technologies
 
-- **Frontend**: React, TypeScript, Vite, Tailwind CSS
+- **Frontend**: React, JavaScript, Vite, Tailwind CSS
 - **Backend**: Node.js, tRPC, Drizzle ORM
 - **Blockchain**: Cardano, Plutus V2, Blockfrost API
 - **Database**: SQLite/PostgreSQL
